@@ -26,15 +26,15 @@ import mitt from 'mitt'
 
 const emitter = mitt<Events>()
 
-let zIndex = 2
+let zIndex = 2  // 当前拖拽区域最大层叠量
 
 emitter.on('clickToTop', (e) => {
-  e.style.zIndex = `${zIndex++}`
+  e.style.zIndex = `${zIndex++}`  // 将当前所点击拖拽项的层叠量等于当前最大层叠量加一
 })
 
 defineProps<{
-  width: number,
-  height: number
+  width: number,  // 宽度百分比
+  height: number  // 高度百分比
 }>()
 
 provide(emitterKey, emitter)

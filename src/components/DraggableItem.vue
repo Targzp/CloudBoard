@@ -25,28 +25,29 @@ import { useDraggable } from '@/hooks'
 import { useEventListener } from '@vueuse/core'
 import { emitterKey } from './DraggableBoard.vue'
 
-// 初始坐标 Props
 const props = defineProps<{
-  initialX?: number,
-  initialY?: number,
-  dragId: string
+  initialX?: number,  // 初始 x 坐标
+  initialY?: number,  // 初始 y 坐标
+  dragId: string  // 拖拽项 id
 }>()
 const emit = defineEmits<{
   (e: 'changPosition', x: number, y: number, dragId: string): void
 }>()
 
+const emitter = inject(emitterKey)
+
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
 const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
-const { left, top } = useDraggable(headerEl, el, { x: 500, y: 200 })
+const { left, top } = useDraggable(headerEl, el, { x: 500, y: 200 })  // 开启可拖拽功能
 
+// 监听拖拽时的偏移量
 watch([left, top], ([newLeft, newTop]) => {
   if (newLeft && newTop) {
     emit('changPosition', parseInt(newLeft), parseInt(newTop), props.dragId)
   }
 })
 
-const emitter = inject(emitterKey)
-
+// 当点击拖拽容器时将拖拽项保持在拖拽区域最前
 const handlePutTop = (e: PointerEvent) => {
   if (e) {
     emitter?.emit('clickToTop', el.value as HTMLElement)
