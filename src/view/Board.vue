@@ -9,6 +9,8 @@
         v-for="item in dragBlocks"
         :key="item.id"
         :dragId="item.id"
+        :initialX="draggableItems[item.id].x"
+        :initialY="draggableItems[item.id].y"
         @changPosition="handleStorePosition"
       >
         <template #header>
@@ -22,10 +24,11 @@
 <script lang="ts" setup>
 import {
   ref,
-  Ref
+  Ref,
+  computed
 } from 'vue'
 import { useStore } from 'vuex'
-import draggableItemsMutationTypes from '@/store/modules/draggableItems/mutationTypes'
+import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
 import SideBar from '@/components/SideBar.vue'
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
@@ -55,8 +58,10 @@ const dragBlocks: Ref<dragItem[]> = ref([
   }
 ])
 
+const draggableItems = computed(() => store.state.draggable.draggableItems)
+
 const handleStorePosition = (x: number, y: number, dragId: string) => {
-  store.commit(`draggableItems/${draggableItemsMutationTypes.CHANGE_POSITION}`, {
+  store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_POSITION}`, {
     dragId,
     x,
     y

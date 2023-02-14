@@ -38,7 +38,7 @@ const emitter = inject(emitterKey)
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
 const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
-const { left, top } = useDraggable(headerEl, el, { x: 500, y: 200 })  // 开启可拖拽功能
+const { left, top } = useDraggable(headerEl, el, { x: props.initialX || 500, y: props.initialY || 200 })  // 开启可拖拽功能
 
 // 监听拖拽时的偏移量
 watch([left, top], ([newLeft, newTop]) => {

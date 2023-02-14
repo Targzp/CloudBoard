@@ -10,7 +10,7 @@ export interface State {
 
 // draggableItems 状态
 const state: State = {
-  draggableItems: {}
+  draggableItems: JSON.parse(localStorage.getItem('cloudBoard') as string).draggable.draggableItems || {}
 }
 
 export default state

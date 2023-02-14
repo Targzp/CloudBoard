@@ -1,10 +1,14 @@
+import createPersistedState from 'vuex-persistedstate'
 import { createStore } from 'vuex'
-import draggableItems from './modules/draggableItems'
+import draggable from './modules/draggable'
 
 const store = createStore({
   modules: {
-    ...draggableItems
-  }
+    ...draggable
+  },
+  plugins: [createPersistedState({
+    key: 'cloudBoard'
+  })]
 })
 
 export default store
