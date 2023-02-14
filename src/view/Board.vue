@@ -24,10 +24,14 @@ import {
   ref,
   Ref
 } from 'vue'
+import { useStore } from 'vuex'
+import draggableItemsMutationTypes from '@/store/modules/draggableItems/mutationTypes'
 import SideBar from '@/components/SideBar.vue'
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
 import dayjs from 'dayjs'
+
+const store = useStore()
 
 interface dragItem {
   id: string,
@@ -52,9 +56,11 @@ const dragBlocks: Ref<dragItem[]> = ref([
 ])
 
 const handleStorePosition = (x: number, y: number, dragId: string) => {
-  console.log('dragId: ', dragId);
-  console.log('x: ', x);
-  console.log('y: ', y);
+  store.commit(`draggableItems/${draggableItemsMutationTypes.CHANGE_POSITION}`, {
+    dragId,
+    x,
+    y
+  })
 }
 </script>
 
