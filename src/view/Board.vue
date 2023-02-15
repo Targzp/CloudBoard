@@ -11,8 +11,8 @@
         v-for="item in dragBlocks"
         :key="item.id"
         :dragId="item.id"
-        :initialX="draggableItems[item.id].x"
-        :initialY="draggableItems[item.id].y"
+        :initialX="draggableItems[item.id]?.x"
+        :initialY="draggableItems[item.id]?.y"
         @changPosition="handleStorePosition"
       >
         <template #header>
@@ -56,6 +56,12 @@ const dragBlocks: Ref<dragItem[]> = ref([
     id: 'nt100002',
     title: '便签2',
     content: '内容2',
+    createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+  },
+  {
+    id: 'nt100003',
+    title: '便签3',
+    content: '内容3',
     createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
   }
 ])
