@@ -4,6 +4,8 @@
     <DraggableBoard
       :width="100"
       :height="100"
+      :initialTopDragItem="topDragItemId"
+      @changeTopItem="handleStoreTopItemId"
     >
       <DraggableItem
         v-for="item in dragBlocks"
@@ -59,13 +61,28 @@ const dragBlocks: Ref<dragItem[]> = ref([
 ])
 
 const draggableItems = computed(() => store.state.draggable.draggableItems)
+const topDragItemId = computed(() => store.state.draggable.topDragItemId)
 
+/**
+ * 存储拖拽项偏移量
+ * @param x 左偏移量
+ * @param y 上偏移量
+ * @param dragId 拖拽项 ID
+ */
 const handleStorePosition = (x: number, y: number, dragId: string) => {
   store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_POSITION}`, {
     dragId,
     x,
     y
   })
+}
+
+/**
+ * 存储最顶端拖拽项 ID
+ * @param dragId 拖拽项 ID
+ */
+const handleStoreTopItemId = (dragId: string) => {
+  store.commit(`draggable/${draggableItemsMutationTypes.GTETOPITEMID}`, dragId)
 }
 </script>
 

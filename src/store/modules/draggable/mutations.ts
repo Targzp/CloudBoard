@@ -2,7 +2,8 @@ import mutationTypes from './mutationTypes'
 import { State } from './state'
 
 const {
-  CHANGE_POSITION
+  CHANGE_POSITION,
+  GTETOPITEMID
 } = mutationTypes
 
 interface CPOSITIONPAYLOAD {
@@ -18,12 +19,19 @@ const mutations = {
    * @param payload 
    */
   [CHANGE_POSITION](state: State, payload: CPOSITIONPAYLOAD) {
-    console.log('payload: ', payload);
     state.draggableItems[payload.dragId] = {
       ...state.draggableItems[payload.dragId],
       x: payload.x,
       y: payload.y
     }
+  },
+  /**
+   * 更改当前顶端拖拽项 ID
+   * @param state 
+   * @param dragId 
+   */
+  [GTETOPITEMID](state: State, dragId: string) {
+    state.topDragItemId = dragId
   }
 }
 

@@ -7,12 +7,14 @@ export interface State {
       x: number,
       y: number
     }
-  }
+  },
+  topDragItemId: string
 }
 
 // draggableItems 状态
 const state: State = {
-  draggableItems: getStorageData('local', 'cloudBoard', 'draggable', 'draggableItems') || {}
+  draggableItems: getStorageData('local', 'cloudBoard', 'draggable', 'draggableItems') || {},
+  topDragItemId: getStorageData('local', 'cloudBoard', 'draggable', 'topDragItemId') || ''
 }
 
 export default state

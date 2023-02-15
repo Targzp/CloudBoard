@@ -19,11 +19,12 @@
 import {
   ref,
   inject,
-  watch
+  watch,
+  onMounted
 } from 'vue'
 import { useDraggable } from '@/hooks'
 import { useEventListener } from '@vueuse/core'
-import { emitterKey } from './DraggableBoard.vue'
+import { emitterKey, initialTopDragKey } from './DraggableBoard.vue'
 
 const props = defineProps<{
   initialX?: number,  // 初始 x 坐标
@@ -35,6 +36,7 @@ const emit = defineEmits<{
 }>()
 
 const emitter = inject(emitterKey)
+const initialTopDragId = inject(initialTopDragKey)
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
 const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
@@ -50,10 +52,16 @@ watch([left, top], ([newLeft, newTop]) => {
 // 当点击拖拽容器时将拖拽项保持在拖拽区域最前
 const handlePutTop = (e: PointerEvent) => {
   if (e) {
-    emitter?.emit('clickToTop', el.value as HTMLElement)
+    emitter?.emit('clickToTop', { e: el.value as HTMLElement, dragId: props.dragId })
   }
 }
 useEventListener(el, 'pointerdown', handlePutTop)
+
+onMounted(() => {
+  if (props.dragId === initialTopDragId && el.value) {
+    el.value.style.zIndex = '2'
+  }
+})
 </script>
 
 <style lang="scss" scope>
