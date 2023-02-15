@@ -1,3 +1,5 @@
+import { getStorageData } from '@/utils'
+
 export interface State {
   draggableItems: {
     [prop: string]: {
@@ -10,7 +12,7 @@ export interface State {
 
 // draggableItems 状态
 const state: State = {
-  draggableItems: JSON.parse(localStorage.getItem('cloudBoard') as string).draggable.draggableItems || {}
+  draggableItems: getStorageData('local', 'cloudBoard', 'draggable', 'draggableItems') || {}
 }
 
 export default state
