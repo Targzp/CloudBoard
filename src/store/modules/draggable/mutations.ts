@@ -4,7 +4,8 @@ import { State } from './state'
 const {
   CHANGE_POSITION,
   CHANGE_ZINDEX,
-  GTETOPZINDEX
+  GTETOPZINDEX,
+  CHANGE_RECT
 } = mutationTypes
 
 interface CPOSITIONPAYLOAD {
@@ -16,6 +17,12 @@ interface CPOSITIONPAYLOAD {
 interface CZINDEXPAYLOAD {
   dragId: string,
   zIndex: number
+}
+
+interface CRECTPAYLOAD {
+  dragId: string,
+  width: number,
+  height: number
 }
 
 const mutations = {
@@ -49,6 +56,18 @@ const mutations = {
    */
   [GTETOPZINDEX](state: State, zIndex: number) {
     state.topZIndex = zIndex
+  },
+  /**
+   * 
+   * @param state 
+   * @param payload 
+   */
+  [CHANGE_RECT](state: State, payload: CRECTPAYLOAD) {
+    state.draggableItems[payload.dragId] = {
+      ...state.draggableItems[payload.dragId],
+      width: payload.width,
+      height: payload.height
+    }
   }
 }
 

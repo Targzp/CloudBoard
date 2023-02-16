@@ -27,11 +27,13 @@ export const emitterKey: InjectionKey<Emitter<Events>> = Symbol('emitterKey')
 import { provide } from 'vue'
 import mitt from 'mitt'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   width: number,  // 宽度百分比
   height: number  // 高度百分比
   initialTopZIndex: number, // 初始最大层叠量
-}>()
+}>(), {
+  initialTopZIndex: 0
+})
 const emit = defineEmits<{
   (e: 'changeTopZIndex', zIndex: number): void
   (e: 'changeItemZIndex', zIndexItem: { dragId: string, zIndex: number }): void

@@ -6,7 +6,9 @@ export interface State {
       data: any,
       x: number,
       y: number,
-      zIndex: number
+      zIndex: number,
+      width: number,
+      height: number
     }
   },
   topZIndex: number
@@ -15,7 +17,7 @@ export interface State {
 // draggableItems 状态
 const state: State = {
   draggableItems: getStorageData('local', 'cloudBoard', 'draggable', 'draggableItems') || {},
-  topZIndex: getStorageData('local', 'cloudBoard', 'draggable', 'topZIndex') || ''
+  topZIndex: getStorageData('local', 'cloudBoard', 'draggable', 'topZIndex') || 0
 }
 
 export default state

@@ -23,24 +23,36 @@ import {
   onMounted
 } from 'vue'
 import { useDraggable } from '@/hooks'
-import { useEventListener } from '@vueuse/core'
+import { 
+  useEventListener,
+  useResizeObserver
+} from '@vueuse/core'
 import { emitterKey } from './DraggableBoard.vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   initialX?: number,  // 初始 x 坐标
   initialY?: number,  // 初始 y 坐标
   initialZIndex?: number, // 初始层叠量
+  initialWidth?: number,  // 初始宽
+  initialHeight?: number, // 初始高
   dragId: string  // 拖拽项 id
-}>()
+}>(), {
+  initialX: 500,
+  initialY: 200,
+  initialZIndex: 0,
+  initialWidth: 300,
+  initialHeight: 300
+})
 const emit = defineEmits<{
   (e: 'changPosition', x: number, y: number, dragId: string): void
+  (e: 'changeRect', width: number, height: number, dragId: string): void
 }>()
 
 const emitter = inject(emitterKey)
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
 const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
-const { left, top } = useDraggable(headerEl, el, { x: props.initialX || 500, y: props.initialY || 200 })  // 开启可拖拽功能
+const { left, top } = useDraggable(headerEl, el, { x: props.initialX, y: props.initialY })  // 开启可拖拽功能
 
 // 监听拖拽时的偏移量
 watch([left, top], ([newLeft, newTop]) => {
@@ -57,9 +69,20 @@ const handlePutTop = (e: PointerEvent) => {
 }
 useEventListener(el, 'pointerdown', handlePutTop)
 
+// 当拖拽项宽高变化时记录宽高量
+useResizeObserver(el, (entries) => {
+  const entry = entries[0]
+  const { width, height } = entry.contentRect
+  emit('changeRect', width, height, props.dragId)
+})
+
 onMounted(() => {
   if (props.initialZIndex && el.value) {
     el.value.style.zIndex = `${props.initialZIndex}`
+  }
+  if (props.initialWidth && props.initialHeight && el.value) {
+    el.value.style.width = `${props.initialWidth}px`
+    el.value.style.height = `${props.initialHeight}px`
   }
 })
 </script>
@@ -69,8 +92,6 @@ onMounted(() => {
 .NoteContainer {
   position: fixed;
   background-color: $white;
-  width: 300px;
-  height: 300px;
   min-width: 100px;
   min-height: 100px;
   padding: 8px;

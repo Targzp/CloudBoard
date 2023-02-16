@@ -14,8 +14,11 @@
         :dragId="item.id"
         :initialX="draggableItems[item.id]?.x"
         :initialY="draggableItems[item.id]?.y"
+        :initialWidth="draggableItems[item.id]?.width"
+        :initialHeight="draggableItems[item.id]?.height"
         :initialZIndex="draggableItems[item.id]?.zIndex"
         @changPosition="handleStorePosition"
+        @changeRect="handleStoreRect"
       >
         <template #header>
           {{ item.title }}
@@ -99,6 +102,19 @@ const handleStoreItemZIndex = (zIndexItem: { dragId: string, zIndex: number }) =
  */
 const handleStoreTopItemId = (zIndex: number) => {
   store.commit(`draggable/${draggableItemsMutationTypes.GTETOPZINDEX}`, zIndex)
+}
+
+/**
+ * 存储拖拽想宽高值
+ * @param width 拖拽项宽度
+ * @param height 拖拽项高度
+ */
+const handleStoreRect = (width: number, height: number, dragId: string) => {
+  store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_RECT}`, {
+    dragId,
+    width,
+    height
+  })
 }
 </script>
 
