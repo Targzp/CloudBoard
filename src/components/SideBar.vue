@@ -110,5 +110,10 @@ const handleShow = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.circle:active {
+  transform: scale(0.9);
 }
 </style>

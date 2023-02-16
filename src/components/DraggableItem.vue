@@ -5,13 +5,11 @@
   >
     <div class="NoteContainer__Header" ref="headerEl">
       <span class="NoteContainer__Header__Title">
-        <slot name="header">
-          便签标题
-        </slot>
+        <slot name="header"></slot>
       </span>
       <el-icon class="NoteContainer__Header__Close pointer"><Close /></el-icon>
     </div>
-    <slot></slot>
+    <slot name="content"></slot>
   </div>
 </template>
 
