@@ -4,8 +4,9 @@
     <DraggableBoard
       :width="100"
       :height="100"
-      :initialTopDragItem="topDragItemId"
-      @changeTopItem="handleStoreTopItemId"
+      :initialTopZIndex="topZIndex"
+      @changeTopZIndex="handleStoreTopItemId"
+      @changeItemZIndex="handleStoreItemZIndex"
     >
       <DraggableItem
         v-for="item in dragBlocks"
@@ -13,6 +14,7 @@
         :dragId="item.id"
         :initialX="draggableItems[item.id]?.x"
         :initialY="draggableItems[item.id]?.y"
+        :initialZIndex="draggableItems[item.id]?.zIndex"
         @changPosition="handleStorePosition"
       >
         <template #header>
@@ -67,7 +69,7 @@ const dragBlocks: Ref<dragItem[]> = ref([
 ])
 
 const draggableItems = computed(() => store.state.draggable.draggableItems)
-const topDragItemId = computed(() => store.state.draggable.topDragItemId)
+const topZIndex = computed(() => store.state.draggable.topZIndex)
 
 /**
  * 存储拖拽项偏移量
@@ -84,11 +86,19 @@ const handleStorePosition = (x: number, y: number, dragId: string) => {
 }
 
 /**
- * 存储最顶端拖拽项 ID
- * @param dragId 拖拽项 ID
+ * 存储拖拽项层叠量
+ * @param zIndexItem 层叠量对象
  */
-const handleStoreTopItemId = (dragId: string) => {
-  store.commit(`draggable/${draggableItemsMutationTypes.GTETOPITEMID}`, dragId)
+const handleStoreItemZIndex = (zIndexItem: { dragId: string, zIndex: number }) => {
+  store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_ZINDEX}`, zIndexItem)
+}
+
+/**
+ * 存储最顶端拖拽项层叠量
+ * @param zIndex 层叠量
+ */
+const handleStoreTopItemId = (zIndex: number) => {
+  store.commit(`draggable/${draggableItemsMutationTypes.GTETOPZINDEX}`, zIndex)
 }
 </script>
 

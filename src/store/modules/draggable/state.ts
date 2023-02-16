@@ -5,16 +5,17 @@ export interface State {
     [prop: string]: {
       data: any,
       x: number,
-      y: number
+      y: number,
+      zIndex: number
     }
   },
-  topDragItemId: string
+  topZIndex: number
 }
 
 // draggableItems 状态
 const state: State = {
   draggableItems: getStorageData('local', 'cloudBoard', 'draggable', 'draggableItems') || {},
-  topDragItemId: getStorageData('local', 'cloudBoard', 'draggable', 'topDragItemId') || ''
+  topZIndex: getStorageData('local', 'cloudBoard', 'draggable', 'topZIndex') || ''
 }
 
 export default state

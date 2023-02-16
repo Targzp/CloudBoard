@@ -3,13 +3,19 @@ import { State } from './state'
 
 const {
   CHANGE_POSITION,
-  GTETOPITEMID
+  CHANGE_ZINDEX,
+  GTETOPZINDEX
 } = mutationTypes
 
 interface CPOSITIONPAYLOAD {
   dragId: string,
   x: number,
   y: number
+}
+
+interface CZINDEXPAYLOAD {
+  dragId: string,
+  zIndex: number
 }
 
 const mutations = {
@@ -26,12 +32,23 @@ const mutations = {
     }
   },
   /**
-   * 更改当前顶端拖拽项 ID
+   * 更改拖拽项层叠量
+   * @param state 
+   * @param payload 
+   */
+  [CHANGE_ZINDEX](state: State, payload: CZINDEXPAYLOAD) {
+    state.draggableItems[payload.dragId] = {
+      ...state.draggableItems[payload.dragId],
+      zIndex: payload.zIndex
+    }
+  },
+  /**
+   * 更改当前顶端拖拽项层叠量
    * @param state 
    * @param dragId 
    */
-  [GTETOPITEMID](state: State, dragId: string) {
-    state.topDragItemId = dragId
+  [GTETOPZINDEX](state: State, zIndex: number) {
+    state.topZIndex = zIndex
   }
 }
 

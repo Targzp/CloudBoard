@@ -24,11 +24,12 @@ import {
 } from 'vue'
 import { useDraggable } from '@/hooks'
 import { useEventListener } from '@vueuse/core'
-import { emitterKey, initialTopDragKey } from './DraggableBoard.vue'
+import { emitterKey } from './DraggableBoard.vue'
 
 const props = defineProps<{
   initialX?: number,  // 初始 x 坐标
   initialY?: number,  // 初始 y 坐标
+  initialZIndex?: number, // 初始层叠量
   dragId: string  // 拖拽项 id
 }>()
 const emit = defineEmits<{
@@ -36,7 +37,6 @@ const emit = defineEmits<{
 }>()
 
 const emitter = inject(emitterKey)
-const initialTopDragId = inject(initialTopDragKey)
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
 const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
@@ -58,8 +58,8 @@ const handlePutTop = (e: PointerEvent) => {
 useEventListener(el, 'pointerdown', handlePutTop)
 
 onMounted(() => {
-  if (props.dragId === initialTopDragId && el.value) {
-    el.value.style.zIndex = '2'
+  if (props.initialZIndex && el.value) {
+    el.value.style.zIndex = `${props.initialZIndex}`
   }
 })
 </script>
