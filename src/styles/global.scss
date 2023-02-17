@@ -1,3 +1,8 @@
+/* 字体加粗 */
+.fontBold {
+  font-weight: bold;
+}
+
 /* 手指型鼠标 */
 .pointer {
   cursor: pointer;
@@ -8,4 +13,51 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* 无边框输入框 */
+.nb-input {
+  border: none;
+  font-size: 14px;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+/* 无边框文本输入域 */
+.nb-textarea {
+  border: none;
+  font-size: 14px;
+  color: #444444;
+  width: 100%;
+  height: 100%;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::-webkit-resizer {
+    background-color: transparent;
+  }
+}
+
+/* 滚动条全局修改 */
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 3px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset006pxrgba(0,0,0,0.3);
+  border-radius: 10px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0,0,0,0.1);
+  -webkit-box-shadow: inset006pxrgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(143, 143, 143, 0.4);
 }

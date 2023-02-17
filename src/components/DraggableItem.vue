@@ -9,7 +9,10 @@
       </span>
       <el-icon class="NoteContainer__Header__Close pointer"><Close /></el-icon>
     </div>
-    <slot name="content"></slot>
+    
+    <div class="NoteContainer__Content">
+      <slot name="content"></slot>
+    </div>
   </div>
 </template>
 
@@ -90,8 +93,8 @@ onMounted(() => {
 .NoteContainer {
   position: fixed;
   background-color: $white;
-  min-width: 100px;
-  min-height: 100px;
+  min-width: 220px;
+  min-height: 220px;
   padding: 8px;
   resize: both;
   overflow: auto;
@@ -101,8 +104,18 @@ onMounted(() => {
 
   &__Header {
     display: flex;
+    flex: 1 1 auto;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    box-sizing: border-box;
+    top: 8px;
+    left: 0px;
+    right: 0px;
+    border-bottom: 1px solid #e9e9e98c;
 
     &__Title {
       font-weight: bold;
@@ -113,6 +126,13 @@ onMounted(() => {
       font-size: 14px;
       color: $shallowGray;
     }
+  }
+
+  &__Content {
+    padding-top: 30px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
   }
 
   &:hover {

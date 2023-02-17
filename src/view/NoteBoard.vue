@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="NoteBoard">
     <DraggableBoard
       :width="100"
       :height="100"
@@ -20,7 +20,16 @@
         @changeRect="handleStoreRect"
       >
         <template #header>
-          {{ item.title }}
+          <input
+            class="nb-input fontBold"
+            v-model="item.title"
+          />
+        </template>
+        <template #content>
+          <textarea
+            class="nb-textarea"
+            v-model="item.content"
+          />
         </template>
       </DraggableItem>
     </DraggableBoard>
@@ -35,7 +44,6 @@ import {
 } from 'vue'
 import { useStore } from 'vuex'
 import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
-import SideBar from '@/components/SideBar.vue'
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
 import dayjs from 'dayjs'
