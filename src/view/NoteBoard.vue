@@ -31,6 +31,17 @@
             v-model="item.content"
           />
         </template>
+        <template #tool>
+          <el-icon
+            class="pointer ClipboardIcon"
+            @click="copy(item.content)"
+          >
+            <CopyDocument />
+          </el-icon>
+        </template>
+        <template #tip>
+          创建于{{ item.createAt }}
+        </template>
       </DraggableItem>
     </DraggableBoard>
   </div>
@@ -43,6 +54,9 @@ import {
   computed
 } from 'vue'
 import { useStore } from 'vuex'
+import {
+  useClipboard
+} from '@vueuse/core'
 import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
@@ -56,6 +70,8 @@ interface dragItem {
   content: string,
   createAt: string
 }
+
+const { copy } = useClipboard()
 
 const dragBlocks: Ref<dragItem[]> = ref([
   {
@@ -144,4 +160,9 @@ const {
 </script>
 
 <style lang="scss" scope>
+.NoteBoard {
+  .ClipboardIcon {
+    font-size: 14px;
+  }
+}
 </style>

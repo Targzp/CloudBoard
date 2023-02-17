@@ -2,6 +2,8 @@
   <div
     ref="el"
     class="NoteContainer"
+    @mouseenter="handleShowTip"
+    @mouseleave="handleShowTip"
   >
     <div class="NoteContainer__Header" ref="headerEl">
       <span class="NoteContainer__Header__Title">
@@ -13,6 +15,18 @@
     <div class="NoteContainer__Content">
       <slot name="content"></slot>
     </div>
+
+    <div
+      class="NoteContainer__BottomBar"
+      v-if="slots.tip"
+    >
+      <div class="NoteContainer__BottomBar__Content" v-show="showTip">
+        <slot name="tool"></slot>
+        <span class="tip">
+          <slot name="tip"></slot>
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,7 +35,8 @@ import {
   ref,
   inject,
   watch,
-  onMounted
+  onMounted,
+  useSlots
 } from 'vue'
 import { useDraggable } from '@/hooks'
 import { 
@@ -29,6 +44,8 @@ import {
   useResizeObserver
 } from '@vueuse/core'
 import { emitterKey } from './DraggableBoard.vue'
+
+const slots = useSlots()  // 当前组件插槽
 
 const props = withDefaults(defineProps<{
   initialX?: number,  // 初始 x 坐标
@@ -50,6 +67,14 @@ const emit = defineEmits<{
 }>()
 
 const emitter = inject(emitterKey)
+
+const showTip = ref(false)  // 是否显示提示区域
+/**
+ * 处理 tip 区域显示
+ */
+const handleShowTip = () => {
+  showTip.value = !showTip.value
+}
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
 const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
@@ -101,6 +126,8 @@ onMounted(() => {
   box-shadow: 0px 0px 1px 1px $shadowColor;
   border-radius: 5px;
   transition: box-shadow 0.15s ease;
+  display: flex;
+  flex-flow: column nowrap;
 
   &__Header {
     display: flex;
@@ -133,6 +160,29 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+  }
+
+  &__BottomBar {
+    height: 18px;
+    padding-top: 4px;
+
+    &__Content {
+      width: 100%;
+      height: 100%;
+      font-size: 12px;
+      color: $shallowGray;
+      position: relative;
+
+      .tool {
+        position: absolute;
+        left: 0px;
+      }
+
+      .tip {
+        position: absolute;
+        right: 0px;
+      }
+    }
   }
 
   &:hover {
