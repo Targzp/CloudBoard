@@ -4,11 +4,11 @@ export interface State {
   draggableItems: {
     [prop: string]: {
       data: any,
-      x: number,
-      y: number,
-      zIndex: number,
-      width: number,
-      height: number
+      x?: number,
+      y?: number,
+      zIndex?: number,
+      width?: number,
+      height?: number
     }
   },
   topZIndex: number

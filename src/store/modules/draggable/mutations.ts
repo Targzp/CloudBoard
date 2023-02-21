@@ -1,11 +1,13 @@
 import mutationTypes from './mutationTypes'
 import { State } from './state'
+import { DragItem } from '@/view/NoteBoard.vue'
 
 const {
   CHANGE_POSITION,
   CHANGE_ZINDEX,
   GTETOPZINDEX,
-  CHANGE_RECT
+  CHANGE_RECT,
+  ADD_ITEM
 } = mutationTypes
 
 interface CPOSITIONPAYLOAD {
@@ -58,7 +60,7 @@ const mutations = {
     state.topZIndex = zIndex
   },
   /**
-   * 
+   * 更改拖拽项宽高
    * @param state 
    * @param payload 
    */
@@ -67,6 +69,11 @@ const mutations = {
       ...state.draggableItems[payload.dragId],
       width: payload.width,
       height: payload.height
+    }
+  },
+  [ADD_ITEM](state: State, payload: DragItem) {
+    state.draggableItems[payload.id] = {
+      data: payload
     }
   }
 }

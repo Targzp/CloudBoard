@@ -47,6 +47,24 @@
   </div>
 </template>
 
+<script lang="ts">
+export interface DragItem {
+  id: string,
+  title: string,
+  content: string,
+  createAt: string
+}
+
+export const getNewDragItem = (): DragItem => {
+  return {
+    id: _.uniqueId('note_'),
+    title: '',
+    content: '',
+    createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
+  }
+}
+</script>
+
 <script lang="ts" setup>
 import {
   ref,
@@ -63,15 +81,9 @@ import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
 import dayjs from 'dayjs'
+import _ from 'lodash'
 
 const store = useStore()
-
-interface dragItem {
-  id: string,
-  title: string,
-  content: string,
-  createAt: string
-}
 
 const { copy, copied } = useClipboard()
 watch(copied, (newVal) => {
@@ -83,26 +95,7 @@ watch(copied, (newVal) => {
   }
 })
 
-const dragBlocks: Ref<dragItem[]> = ref([
-  {
-    id: 'nt100001',
-    title: '便签1',
-    content: '内容2',
-    createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
-  },
-  {
-    id: 'nt100002',
-    title: '便签2',
-    content: '内容2',
-    createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
-  },
-  {
-    id: 'nt100003',
-    title: '便签3',
-    content: '内容3',
-    createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
-  }
-])
+const dragBlocks = computed(() => store.getters['draggable/dragBlocks'])
 
 const draggableItems = computed(() => store.state.draggable.draggableItems)
 const topZIndex = computed(() => store.state.draggable.topZIndex)

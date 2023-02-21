@@ -4,7 +4,10 @@
       <!-- 功能区 -->
       <div :class="['SideBar__Function', { 'SideBar__Function--hide': !show }]">
         <!-- 增加 -->
-        <div class="SideBar__Function__Plus circle pointer">
+        <div
+          class="SideBar__Function__Plus circle pointer"
+          @click="handleAddItem"
+        >
           <el-icon class="SideBar__Icon SideBar__Icon--white">
             <Plus />
           </el-icon>
@@ -29,12 +32,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import {
+  ref
+} from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+import { getNewDragItem } from '@/view/NoteBoard.vue'
+import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
+
+const store = useStore()
+
+const route = useRoute()
 
 const show = ref(true)
 
+/**
+ * 处理是否展示功能区
+ */
 const handleShow = () => {
   show.value = !show.value
+}
+
+/**
+ * 增加云板项目
+ */
+const handleAddItem = () => {
+  const path = route.path
+  if (path.includes('note-board')) {
+    store.commit(`draggable/${draggableItemsMutationTypes.ADD_ITEM}`, getNewDragItem())
+  }
 }
 </script>
 
