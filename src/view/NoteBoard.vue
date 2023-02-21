@@ -51,12 +51,14 @@
 import {
   ref,
   Ref,
-  computed
+  computed,
+  watch
 } from 'vue'
 import { useStore } from 'vuex'
 import {
   useClipboard
 } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
 import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
@@ -71,7 +73,15 @@ interface dragItem {
   createAt: string
 }
 
-const { copy } = useClipboard()
+const { copy, copied } = useClipboard()
+watch(copied, (newVal) => {
+  if (newVal) {
+    ElMessage({
+      message: '复制成功',
+      type: 'success'
+    })
+  }
+})
 
 const dragBlocks: Ref<dragItem[]> = ref([
   {
