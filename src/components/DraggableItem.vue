@@ -18,7 +18,7 @@
 
     <div
       class="NoteContainer__BottomBar"
-      v-if="slots.tip"
+      v-if="slots.tip || slots.tool"
     >
       <div class="NoteContainer__BottomBar__Content" v-show="showTip">
         <slot name="tool"></slot>
