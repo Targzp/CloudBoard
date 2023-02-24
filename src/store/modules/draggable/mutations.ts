@@ -7,7 +7,10 @@ const {
   CHANGE_ZINDEX,
   GTETOPZINDEX,
   CHANGE_RECT,
-  ADD_ITEM
+  ADD_ITEM,
+  DELETE_ITEM,
+  CHANGE_ITEM_TITLE,
+  CHANGE_ITEM_CONTENT
 } = mutationTypes
 
 interface CPOSITIONPAYLOAD {
@@ -25,6 +28,16 @@ interface CRECTPAYLOAD {
   dragId: string,
   width: number,
   height: number
+}
+
+interface CITEMTITLEPAYLOAD {
+  dragId: string,
+  title: string
+}
+
+interface CITEMCONTENTPAYLOAD {
+  dragId: string,
+  content: string
 }
 
 const mutations = {
@@ -71,10 +84,39 @@ const mutations = {
       height: payload.height
     }
   },
+  /**
+   * 增加拖拽项
+   * @param state 
+   * @param payload 
+   */
   [ADD_ITEM](state: State, payload: DragItem) {
     state.draggableItems[payload.id] = {
       data: payload
     }
+  },
+  /**
+   * 删除拖拽项
+   * @param state 
+   * @param payload 
+   */
+  [DELETE_ITEM](state: State, payload: string) {
+    delete state.draggableItems[payload]
+  },
+  /**
+   * 修改拖拽项标题
+   * @param state 
+   * @param payload 
+   */
+  [CHANGE_ITEM_TITLE](state: State, payload: CITEMTITLEPAYLOAD) {
+    state.draggableItems[payload.dragId].data.title = payload.title
+  },
+  /**
+   * 修改拖拽项内容
+   * @param state 
+   * @param payload 
+   */
+  [CHANGE_ITEM_CONTENT](state: State, payload: CITEMCONTENTPAYLOAD) {
+    state.draggableItems[payload.dragId].data.content = payload.content
   }
 }
 

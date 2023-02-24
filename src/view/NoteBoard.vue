@@ -18,17 +18,20 @@
         :initialZIndex="draggableItems[item.id]?.zIndex"
         @changPosition="handleStorePosition"
         @changeRect="handleStoreRect"
+        @deleteItem="handleDeleteDragItem(item.id)"
       >
         <template #header>
           <input
             class="nb-input fontBold"
-            v-model="item.title"
+            :value="item.title"
+            @input="handleItemChange($event, 'title', item.id)"
           />
         </template>
         <template #content>
           <textarea
             class="nb-textarea"
-            v-model="item.content"
+            :value="item.content"
+            @input="handleItemChange($event, 'content', item.id)"
           />
         </template>
         <template #tool>
@@ -99,6 +102,30 @@ const dragBlocks = computed(() => store.getters['draggable/dragBlocks'])
 
 const draggableItems = computed(() => store.state.draggable.draggableItems)
 const topZIndex = computed(() => store.state.draggable.topZIndex)
+
+/**
+ * 删除便签拖拽项
+ * @param dragId 拖拽项 Id
+ */
+const handleDeleteDragItem = (dragId: string) => {
+  store.commit(`draggable/${draggableItemsMutationTypes.DELETE_ITEM}`, dragId)
+}
+
+const handleItemChange = (e: Event, type: 'title' | 'content', dragId: string) => {
+  const value = (e.target as HTMLInputElement).value
+  if (type === 'title') {
+    store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_ITEM_TITLE}`, {
+      dragId,
+      title: value
+    })
+  } else if (type === 'content') {
+    store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_ITEM_CONTENT}`, {
+      dragId,
+      content: value
+    })
+  } 
+}
+
 
 /**
  * 存储拖拽项各类配置的 hook

@@ -9,7 +9,10 @@
       <span class="NoteContainer__Header__Title">
         <slot name="header"></slot>
       </span>
-      <el-icon class="NoteContainer__Header__Close pointer"><Close /></el-icon>
+      <el-icon
+        class="NoteContainer__Header__Close pointer"
+        @click="emit('deleteItem')"
+      ><Close /></el-icon>
     </div>
     
     <div class="NoteContainer__Content">
@@ -64,6 +67,7 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   (e: 'changPosition', x: number, y: number, dragId: string): void
   (e: 'changeRect', width: number, height: number, dragId: string): void
+  (e: 'deleteItem'): void
 }>()
 
 const emitter = inject(emitterKey)
