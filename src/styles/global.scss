@@ -8,10 +8,15 @@
   cursor: pointer;
 }
 
-/* flex 垂直居中布局 */
+/* flex 布局 */
 .flexCenter {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.flexStart {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -39,6 +44,17 @@
 
   &::-webkit-resizer {
     background-color: transparent;
+  }
+}
+
+/* div元素文本输入域 */
+.text-div {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+
+  &:focus-visible {
+    outline: none;
   }
 }
 

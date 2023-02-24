@@ -28,11 +28,11 @@
           />
         </template>
         <template #content>
-          <textarea
-            class="nb-textarea"
-            :value="item.content"
+          <div
+            :contentEditable="true"
+            class="text-div"
             @input="handleItemChange($event, 'content', item.id)"
-          />
+          >{{ item.content }}</div>
         </template>
         <template #tool>
           <el-icon
@@ -41,6 +41,7 @@
           >
             <CopyDocument />
           </el-icon>
+          <UploadFileButton />
         </template>
         <template #tip>
           创建于{{ item.createAt }}
@@ -83,6 +84,7 @@ import { ElMessage } from 'element-plus'
 import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
 import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
+import UploadFileButton from '@/components/UploadFileButton.vue'
 import dayjs from 'dayjs'
 import _ from 'lodash'
 
@@ -112,13 +114,14 @@ const handleDeleteDragItem = (dragId: string) => {
 }
 
 const handleItemChange = (e: Event, type: 'title' | 'content', dragId: string) => {
-  const value = (e.target as HTMLInputElement).value
   if (type === 'title') {
+    const value = (e.target as HTMLInputElement).value
     store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_ITEM_TITLE}`, {
       dragId,
       title: value
     })
   } else if (type === 'content') {
+    const value = (e.target as HTMLInputElement).innerText
     store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_ITEM_CONTENT}`, {
       dragId,
       content: value
