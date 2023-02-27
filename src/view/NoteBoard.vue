@@ -52,6 +52,8 @@
 </template>
 
 <script lang="ts">
+import { generateRandom } from '@/utils'
+
 export interface DragItem {
   id: string,
   title: string,
@@ -61,7 +63,7 @@ export interface DragItem {
 
 export const getNewDragItem = (): DragItem => {
   return {
-    id: _.uniqueId('note_'),
+    id: generateRandom(),
     title: '',
     content: '',
     createAt: dayjs().format('YYYY-MM-DD HH:mm:ss')
@@ -71,8 +73,6 @@ export const getNewDragItem = (): DragItem => {
 
 <script lang="ts" setup>
 import {
-  ref,
-  Ref,
   computed,
   watch
 } from 'vue'
@@ -86,7 +86,6 @@ import DraggableBoard from '@/components/DraggableBoard.vue'
 import DraggableItem from '@/components/DraggableItem.vue'
 import UploadFileButton from '@/components/UploadFileButton.vue'
 import dayjs from 'dayjs'
-import _ from 'lodash'
 
 const store = useStore()
 

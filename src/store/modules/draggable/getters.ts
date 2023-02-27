@@ -1,5 +1,5 @@
 import { State } from './state'
-import { objectToArray } from '@/utils/objectToArray'
+import { objectToArray } from '@/utils'
 
 const getters = {
   dragBlocks (state: State) {
