@@ -29,10 +29,11 @@
         </template>
         <template #content>
           <div
-            :contentEditable="true"
+            contenteditable
             class="text-div"
-            @input="handleItemChange($event, 'content', item.id)"
-          >{{ item.content }}</div>
+            @blur="handleItemChange($event, 'content', item.id)"
+            v-html="item.content"
+          ></div>
         </template>
         <template #tool>
           <el-icon
@@ -120,12 +121,12 @@ const handleItemChange = (e: Event, type: 'title' | 'content', dragId: string) =
       title: value
     })
   } else if (type === 'content') {
-    const value = (e.target as HTMLInputElement).innerText
+    const value = (e.target as HTMLInputElement).innerHTML
     store.commit(`draggable/${draggableItemsMutationTypes.CHANGE_ITEM_CONTENT}`, {
       dragId,
       content: value
     })
-  } 
+  }
 }
 
 
