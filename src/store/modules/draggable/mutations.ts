@@ -37,6 +37,7 @@ interface CITEMTITLEPAYLOAD {
 
 interface CITEMCONTENTPAYLOAD {
   dragId: string,
+  patch: boolean,
   content: string
 }
 
@@ -116,7 +117,11 @@ const mutations = {
    * @param payload 
    */
   [CHANGE_ITEM_CONTENT](state: State, payload: CITEMCONTENTPAYLOAD) {
-    state.draggableItems[payload.dragId].data.content = payload.content
+    if (!payload.patch) {
+      state.draggableItems[payload.dragId].data.content = payload.content
+    } else {
+      state.draggableItems[payload.dragId].data.content += payload.content
+    }
   }
 }
 

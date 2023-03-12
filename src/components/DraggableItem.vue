@@ -160,7 +160,7 @@ onMounted(() => {
   }
 
   &__Content {
-    padding-top: 30px;
+    padding-top: 35px;
     width: 100%;
     height: 98%;
     overflow: hidden;
