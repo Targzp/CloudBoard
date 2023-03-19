@@ -31,7 +31,9 @@
           <div
             contenteditable
             class="text-div"
-            @input="handleItemChange($event, null, 'content', item.id)"
+            @input="handleInput($event, null, 'content', item.id)"
+            @compositionstart="handleCompositionStart"
+            @compositionend="handleCompositionEnd"
             v-html="item.content"
           ></div>
         </template>
@@ -85,6 +87,7 @@ import DraggableBoard from '@/components/DraggableBoard.vue';
 import DraggableItem from '@/components/DraggableItem.vue';
 import UploadFileButton from '@/components/UploadFileButton.vue';
 import dayjs from 'dayjs';
+import _ from 'lodash'
 
 const store = useStore();
 
@@ -111,6 +114,27 @@ const handleDeleteDragItem = (dragId: string) => {
   store.commit(`draggable/${draggableItemsMutationTypes.DELETE_ITEM}`, dragId);
 };
 
+let flag = true
+const handleCompositionStart = (e: Event) => {
+  flag = false
+}
+const handleCompositionEnd = () => {
+  flag = true
+}
+const handleInput = (
+  e: Event | null,
+  val: string | null,
+  type: 'title' | 'content',
+  dragId: string
+) => {
+  
+  setTimeout(() => {
+    if (flag) {
+      handleItemChange(e, val, type, dragId)
+    }
+  }, 0)
+}
+
 const handleItemChange = (
   e: Event | null,
   val: string | null,
@@ -133,19 +157,19 @@ const handleItemChange = (
         content: value,
       }
     );
-  }
 
-  nextTick(() => {
+    nextTick(() => {
     if (e) {
-      const target = e.target as HTMLInputElement
-      target.focus()
-      const range = window.getSelection(); // 创建range
-      if (range) {
-        range!.selectAllChildren(target); // range 选择target下所有子内容
-        range!.collapseToEnd(); // 光标移至最后
+        const target = e.target as HTMLInputElement
+        target.focus()
+        const range = window.getSelection(); // 创建range
+        if (range) {
+          range!.selectAllChildren(target); // range 选择target下所有子内容
+          range!.collapseToEnd(); // 光标移至最后
+        }
       }
-    }
-  })
+    })
+  }
 };
 
 /**
