@@ -11,13 +11,15 @@ export interface State {
       height?: number
     }
   },
-  topZIndex: number
+  topZIndex: number,
+  arrangeCount: number,
 }
 
 // draggableItems 状态
 const state: State = {
   draggableItems: getStorageData('local', 'cloudBoard', 'draggable', 'draggableItems') || {},
-  topZIndex: getStorageData('local', 'cloudBoard', 'draggable', 'topZIndex') || 0
+  topZIndex: getStorageData('local', 'cloudBoard', 'draggable', 'topZIndex') || 0,
+  arrangeCount: getStorageData('local', 'cloudBoard', 'draggable', 'arrangeCount') || 0
 }
 
 export default state

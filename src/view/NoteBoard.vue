@@ -1,6 +1,7 @@
 <template>
   <div class="NoteBoard">
     <DraggableBoard
+      :key="arrageCount"
       :width="100"
       :height="100"
       :initialTopZIndex="topZIndex"
@@ -69,6 +70,8 @@ import UploadFileButton from '@/components/UploadFileButton.vue';
 import _ from 'lodash'
 
 const store = useStore()
+
+const arrageCount = computed(() => store.state.draggable.arrangeCount);
 
 const topZIndex = computed(() => store.state.draggable.topZIndex);
 
