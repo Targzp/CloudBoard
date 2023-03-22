@@ -37,7 +37,6 @@ import {
 } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { getNewDragItem } from '@/view/NoteBoard.vue'
 import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes'
 
 const store = useStore()
@@ -59,7 +58,7 @@ const handleShow = () => {
 const handleAddItem = () => {
   const path = route.path
   if (path.includes('note-board')) {
-    store.commit(`draggable/${draggableItemsMutationTypes.ADD_ITEM}`, getNewDragItem())
+    store.commit(`draggable/${draggableItemsMutationTypes.ADD_ITEM}`)
   }
 }
 </script>

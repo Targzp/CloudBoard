@@ -1,6 +1,7 @@
 import mutationTypes from './mutationTypes'
+import { generateRandom } from '@/utils'
 import { State } from './state'
-import { DragItem } from '@/view/NoteBoard.vue'
+import dayjs from 'dayjs'
 
 const {
   CHANGE_POSITION,
@@ -90,9 +91,16 @@ const mutations = {
    * @param state 
    * @param payload 
    */
-  [ADD_ITEM](state: State, payload: DragItem) {
-    state.draggableItems[payload.id] = {
-      data: payload
+  [ADD_ITEM](state: State) {
+    const id = generateRandom()
+    state.draggableItems[id] = {
+      data: {
+        id,
+        title: '',
+        content: '',
+        createAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      },
+      zIndex: state.topZIndex + 1,
     }
   },
   /**

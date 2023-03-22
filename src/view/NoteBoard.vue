@@ -57,28 +57,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { generateRandom } from '@/utils';
-
-export interface DragItem {
-  id: string;
-  title: string;
-  content: string;
-  createAt: string;
-}
-
-export const getNewDragItem = (): DragItem => {
-  return {
-    id: generateRandom(),
-    title: '',
-    content: '',
-    createAt: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-  };
-};
-</script>
-
 <script lang="ts" setup>
-import { computed, watch, ref, nextTick } from 'vue';
+import { computed, watch, nextTick } from 'vue';
 import { useStore } from 'vuex';
 import { useClipboard } from '@vueuse/core';
 import { ElMessage } from 'element-plus';
@@ -86,10 +66,11 @@ import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes
 import DraggableBoard from '@/components/DraggableBoard.vue';
 import DraggableItem from '@/components/DraggableItem.vue';
 import UploadFileButton from '@/components/UploadFileButton.vue';
-import dayjs from 'dayjs';
 import _ from 'lodash'
 
-const store = useStore();
+const store = useStore()
+
+const topZIndex = computed(() => store.state.draggable.topZIndex);
 
 const { copy, copied } = useClipboard();
 watch(copied, (newVal) => {
@@ -104,7 +85,6 @@ watch(copied, (newVal) => {
 const dragBlocks = computed(() => store.getters['draggable/dragBlocks']);
 
 const draggableItems = computed(() => store.state.draggable.draggableItems);
-const topZIndex = computed(() => store.state.draggable.topZIndex);
 
 /**
  * 删除便签拖拽项
