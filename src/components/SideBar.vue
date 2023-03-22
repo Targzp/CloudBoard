@@ -12,6 +12,15 @@
             <Plus />
           </el-icon>
         </div>
+        <!-- 整理 -->
+        <div
+          class="SideBar__Function__Tidy circle pointer"
+          @click="handleArrange"
+        >
+          <el-icon class="SideBar__Icon SideBar__Icon--blue">
+            <Files />
+          </el-icon>
+        </div>
       </div>
     </div>
     <!-- 操作区 -->
@@ -61,6 +70,13 @@ const handleAddItem = () => {
     store.commit(`draggable/${draggableItemsMutationTypes.ADD_ITEM}`)
   }
 }
+
+/**
+ * 整理便签拖拽项
+ */
+const handleArrange = () => {
+  store.commit(`draggable/${draggableItemsMutationTypes.ARRANGE_ITEM}`)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -89,13 +105,16 @@ const handleAddItem = () => {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: space-between;
     border-radius: 29px 29px 0px 0px;
     box-shadow: 0px 0px 5px 1px $shadowColor;
 
     &__Plus {
       background-color: $primary;
       box-shadow: 0px 0px 8px 1px $shadowBlue;
+    }
+
+    &__Tidy {
+      margin-top: 5px;
     }
   }
 

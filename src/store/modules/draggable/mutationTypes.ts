@@ -7,4 +7,5 @@ export default {
   DELETE_ITEM: 'DELETE_ITEM',  // 删除便签拖拽项
   CHANGE_ITEM_TITLE: 'CHANGE_ITEM_TITLE', // 修改便签拖拽项标题
   CHANGE_ITEM_CONTENT: 'CHANGE_ITEM_CONTENT', // 修改便签拖拽项内容
+  ARRANGE_ITEM: 'ARRANGE_ITEM', // 整理便签拖拽项
 }
