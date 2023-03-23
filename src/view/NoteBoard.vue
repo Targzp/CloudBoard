@@ -268,12 +268,23 @@ const handleGetFile = (file: File, dragId: string) => {
   const reader = new FileReader()
   reader.readAsDataURL(file)
   reader.onload = function () {
-    const imgEleString = `
-      <div>
-        <img src="${this.result}" alt="">
-      </div>
-    `
-    handleItemChange(null, imgEleString, 'content', dragId)
+    let width = 0
+    let height = 0
+    if (['image/png', 'image/jpeg'].includes(file.type)) {
+      const img = new Image()
+      img.src = this.result as string
+      img.onload = () => {
+        width = Math.ceil(img.width / 1.5)
+        height = Math.ceil(img.height / 1.5)
+
+        const imgEleString = `
+          <div>
+            <img src="${this.result}" alt="" width="${width}px" height="${height}px">
+          </div>
+        `
+        handleItemChange(null, imgEleString, 'content', dragId)
+      }
+    }
   }
 }
 </script>
