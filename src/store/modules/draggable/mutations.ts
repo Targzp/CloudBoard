@@ -142,29 +142,23 @@ const mutations = {
     if (state.draggableItems) {
       const keys = Object.keys(state.draggableItems)
       let row = 1 // 行数
-      let column = 1 // 列数
+      let column = 0 // 列数
       keys.forEach((key, index) => {
         state.draggableItems[key].width = 220
         state.draggableItems[key].height = 220
-        if (index === 0) {
+
+        let x = 115 + (column * 220) + (column * 30)  // 最左侧边距 + 前面所有拖拽项宽度总和 + 前面所有拖拽项间隔总和
+        if (x + 220 <= arrangeBoxWidth) {
+          state.draggableItems[key].x = x
+          column++
+        } else {
           state.draggableItems[key].x = 115
-        } else {
-          let x = 115 + (column * 220) + (column * 30)  // 最左侧边距 + 前面所有拖拽项宽度总和 + 前面所有拖拽项间隔总和
-          if (x + 220 <= arrangeBoxWidth) {
-            state.draggableItems[key].x = x
-            column++
-          } else {
-            state.draggableItems[key].x = 115
-            column = 1
-            row++
-          }
+          column = 1
+          row++
         }
-        if (row === 1) {
-          state.draggableItems[key].y = 16
-        } else {
-          let y = 16 + ((row - 1) * 220) + ((row - 1) * 30) // 最顶端边距 + 上面所有拖拽项高度总和 + 上面所有拖拽项间隔总和
-          state.draggableItems[key].y = y
-        }
+
+        let y = 16 + ((row - 1) * 220) + ((row - 1) * 30) // 最顶端边距 + 上面所有拖拽项高度总和 + 上面所有拖拽项间隔总和
+        state.draggableItems[key].y = y
       })
 
       state.arrangeCount += 1
