@@ -14,11 +14,20 @@
         </div>
         <!-- 整理 -->
         <div
-          class="SideBar__Function__Tidy circle pointer"
+          class="SideBar__Function__Tidy pointer"
           @click="handleArrange"
         >
           <el-icon class="SideBar__Icon SideBar__Icon--blue">
             <Files />
+          </el-icon>
+        </div>
+        <!-- 清理 -->
+        <div
+          class="SideBar__Function__Delete pointer"
+          @click="handleClear"
+        >
+          <el-icon class="SideBar__Icon SideBar__Icon--blue">
+            <Delete />
           </el-icon>
         </div>
       </div>
@@ -77,6 +86,13 @@ const handleAddItem = () => {
 const handleArrange = () => {
   store.commit(`draggable/${draggableItemsMutationTypes.ARRANGE_ITEM}`)
 }
+
+/**
+ * 清除所有拖拽项
+ */
+const handleClear = () => {
+  store.commit(`draggable/${draggableItemsMutationTypes.CLEAR_ITEM}`)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -113,8 +129,8 @@ const handleArrange = () => {
       box-shadow: 0px 0px 8px 1px $shadowBlue;
     }
 
-    &__Tidy {
-      margin-top: 5px;
+    &__Tidy, &__Delete {
+      margin-top: 20px;
     }
   }
 

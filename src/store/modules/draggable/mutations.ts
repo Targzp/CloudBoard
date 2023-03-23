@@ -13,7 +13,8 @@ const {
   DELETE_ITEM,
   CHANGE_ITEM_TITLE,
   CHANGE_ITEM_CONTENT,
-  ARRANGE_ITEM
+  ARRANGE_ITEM,
+  CLEAR_ITEM
 } = mutationTypes
 
 interface CPOSITIONPAYLOAD {
@@ -132,6 +133,15 @@ const mutations = {
     } else {
       state.draggableItems[payload.dragId].data.content += payload.content
     }
+  },
+  /**
+   * 清除所有拖拽项
+   * @param state 
+   */
+  [CLEAR_ITEM](state: State) {
+    state.draggableItems = {}
+    state.arrangeCount = 0
+    state.topZIndex = 1
   },
   /**
    * 整理拖拽项内容
