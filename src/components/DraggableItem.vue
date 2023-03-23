@@ -120,7 +120,7 @@ onMounted(() => {
 <style lang="scss" scope>
 @import '@/styles/theme/variables.scss';
 .NoteContainer {
-  position: fixed;
+  position: absolute;
   background-color: $white;
   min-width: 220px;
   min-height: 220px;

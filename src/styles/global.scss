@@ -1,3 +1,14 @@
+html {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  position: relative;
+}
+
+body {
+  margin: 0px;
+}
+
 /* 字体加粗 */
 .fontBold {
   font-weight: bold;
@@ -62,6 +73,7 @@
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
   width: 3px;
+  height: 3px;
 }
 /* 滚动槽 */
 ::-webkit-scrollbar-track {
