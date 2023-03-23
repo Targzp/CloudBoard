@@ -53,6 +53,8 @@ const handleGetFile = (e: Event) => {
       emit('onGetFile', files[0]);
     }
   }
+
+  inputRef.value.value = ''
 };
 </script>
 

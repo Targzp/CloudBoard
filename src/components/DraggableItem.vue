@@ -2,8 +2,8 @@
   <div
     ref="el"
     class="NoteContainer"
-    @mouseenter="handleShowTip"
-    @mouseleave="handleShowTip"
+    @mouseenter="handleShowTip(true)"
+    @mouseleave="handleShowTip(false)"
   >
     <div class="NoteContainer__Header" ref="headerEl">
       <span class="NoteContainer__Header__Title">
@@ -73,11 +73,12 @@ const emit = defineEmits<{
 const emitter = inject(emitterKey)
 
 const showTip = ref(false)  // 是否显示提示区域
+
 /**
  * 处理 tip 区域显示
  */
-const handleShowTip = () => {
-  showTip.value = !showTip.value
+const handleShowTip = (showVal: boolean) => {
+  showTip.value = showVal
 }
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
