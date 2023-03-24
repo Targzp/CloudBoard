@@ -61,7 +61,7 @@
 <script lang="ts" setup>
 import { computed, watch, nextTick } from 'vue';
 import { useStore } from 'vuex';
-import { useClipboard } from '@vueuse/core';
+import { useClipboard, useEventListener } from '@vueuse/core';
 import { ElMessage } from 'element-plus';
 import draggableItemsMutationTypes from '@/store/modules/draggable/mutationTypes';
 import DraggableBoard from '@/components/DraggableBoard.vue';
@@ -71,7 +71,7 @@ import _ from 'lodash'
 
 const store = useStore()
 
-const arrageCount = computed(() => store.state.draggable.arrangeCount);
+const arrageCount = computed(() => store.state.draggable.arrangeCount); // 整理便签项次数
 
 const topZIndex = computed(() => store.state.draggable.topZIndex);
 
@@ -287,6 +287,15 @@ const handleGetFile = (file: File, dragId: string) => {
     }
   }
 }
+
+useEventListener(document, 'paste', function(event) {
+  var items = (event.clipboardData)!.items;
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].type.indexOf('image') !== -1) {
+      event.preventDefault();
+    }
+  }
+})
 </script>
 
 <style lang="scss" scope>
