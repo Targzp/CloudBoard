@@ -104,6 +104,7 @@ const handleClear = () => {
   transform: translateY(-50%);
   width: 80px;
   height: 442px;
+  z-index: 9999;
 
   &__Inner {
     height: 400px;
@@ -123,6 +124,8 @@ const handleClear = () => {
     align-items: center;
     border-radius: 29px 29px 0px 0px;
     box-shadow: 0px 0px 5px 1px $shadowColor;
+    background-color: $white;
+    background-clip: content-box;
 
     &__Plus {
       background-color: $primary;
