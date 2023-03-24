@@ -15,7 +15,7 @@ interface DragOptions {
   onMove?: Function
 }
 
-export const useDraggable = (handleEl: Ref<HTMLElement | null>, dragEl: Ref<HTMLElement | null>, dragOptions?: DragOptions) => {
+export const useDraggable = (handleEl: Ref<HTMLElement | null>[], dragEl: Ref<HTMLElement | null>, dragOptions?: DragOptions) => {
   const dragConf = reactive({
     left: '0px',
     top: '0px',
@@ -83,7 +83,9 @@ export const useDraggable = (handleEl: Ref<HTMLElement | null>, dragEl: Ref<HTML
     }
   }
   
-  useEventListener(handleEl, 'pointerdown', start, false)
+  handleEl.forEach((el: Ref<HTMLElement | null>) => {
+    useEventListener(el, 'pointerdown', start, false)
+  })
   useEventListener(document, 'pointermove', move, false)
   useEventListener(document, 'pointerup', end, false)
 

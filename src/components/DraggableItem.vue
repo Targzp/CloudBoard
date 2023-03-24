@@ -21,7 +21,8 @@
 
     <div
       class="NoteContainer__BottomBar"
-      v-if="slots.tip || slots.tool"
+      ref="footerEl"
+      v-show="slots.tip || slots.tool"
     >
       <div class="NoteContainer__BottomBar__Content" v-show="showTip">
         <slot name="tool"></slot>
@@ -82,8 +83,9 @@ const handleShowTip = (showVal: boolean) => {
 }
 
 const el = ref<HTMLElement | null>(null)  // 拖拽容器
-const headerEl = ref<HTMLElement | null>(null)  // 可拖拽区域
-const { left, top } = useDraggable(headerEl, el, { x: props.initialX, y: props.initialY })  // 开启可拖拽功能
+const headerEl = ref<HTMLElement | null>(null)  // 头部可拖拽区域
+const footerEl = ref<HTMLElement | null>(null)  // 尾部可拖拽区域
+const { left, top } = useDraggable([headerEl, footerEl], el, { x: props.initialX, y: props.initialY })  // 开启可拖拽功能
 
 // 监听拖拽时的偏移量
 watch([left, top], ([newLeft, newTop]) => {
