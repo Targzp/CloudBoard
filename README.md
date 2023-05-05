@@ -1,2 +1,2 @@
 # CloudBoard
-个人云板开发
+Personal cloud board development, using Vue3+TypeScript.
